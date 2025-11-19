@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('peticiones', function (Blueprint $table) {
+        Schema::create('petitions', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo', 255);
+            $table->string('title', 255);
 
-            $table->text('descripcion');
-            $table->string('destinatario');
-            $table->string('firmantes');
-            $table->enum('estado', ['aceptada', 'pendiente']);
+            $table->text('description');
+            $table->string('destinatary');
+            $table->string('signers');
+            $table->enum('status', ['accepted', 'pending']);
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('categoria_id')->constrained('categorias');
+            $table->foreignId('category_id')->constrained('categories');
             //$table->string('image', 255);
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('peticiones');
+        Schema::dropIfExists('petitions');
     }
 };
