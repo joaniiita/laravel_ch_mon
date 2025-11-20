@@ -6,7 +6,7 @@
     <div class="row g-2 justify-content-center align-items-start mt-5 ">
         <!--                Arriba izquierda-->
         <div class="col-2 d-flex justify-content-start p-2 position-relative">
-            <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="images/changeorg_cuantovaleunavida_entregafirmas5.jpg" alt="Imagen de petición izquierda">
+            <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/changeorg_cuantovaleunavida_entregafirmas5.jpg') }}" alt="Imagen de petición izquierda">
             <div class="bg-light position-absolute custom-top-left-pill translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                 <p class="m-0 d-flex align-items-center ">
                     <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!
@@ -29,7 +29,7 @@
 
         <!--                Arriba derecha-->
         <div class="col-3 d-flex justify-content-start p-2 position-relative ">
-            <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/soloelpueblosalvaalpueblo5.webp" alt="Imagen de petición derecha">
+            <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/soloelpueblosalvaalpueblo5.webp') }}" alt="Imagen de petición derecha">
             <div class="bg-light position-absolute top-75 custom-top-right-pill translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                 <p class="m-0 d-flex align-items-center ">
                     <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!
@@ -45,7 +45,7 @@
         <div class="col-12 d-flex justify-content-center flex-wrap mt-0">
             <!--                    Abajo izquierda-->
             <div class="col-6 p-2 position-relative  custom-div-three">
-                <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/desiderioysoledad_los3%20(1).webp" alt="">
+                <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/desiderioysoledad_los3%20(1).webp') }}" alt="">
                 <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                     <p class="m-0 d-flex align-items-center ">
                         <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!
@@ -56,7 +56,7 @@
 
             <!--                    Abajo derecha-->
             <div class="col-6 p-2 position-relative custom-div-four">
-                <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/entrega_firmas_guardias_medicas_4r%20(1).webp" alt="">
+                <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{asset('assets/images/entrega_firmas_guardias_medicas_4r%20(1).webp')}}" alt="">
                 <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                     <p class="m-0 d-flex align-items-center ">
                         <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!
@@ -66,7 +66,7 @@
             </div>
             <!--                    Abajo-->
             <div class="col-6 p-2 position-relative custom-div-five ">
-                <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/pornagore_elpais.webp" alt="">
+                <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{asset('assets/images/pornagore_elpais.webp')}}" alt="">
                 <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                     <p class="m-0 d-flex align-items-center ">
                         <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!

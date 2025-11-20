@@ -33,4 +33,8 @@ class Petition extends Model
     public function signers(){
         return $this->belongsToMany(User::class, 'petition_user');
     }
+
+    public function files(){
+        return $this->hasMany(File::class);
+    }
 }

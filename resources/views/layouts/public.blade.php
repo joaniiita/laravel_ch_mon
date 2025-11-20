@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+@endphp
 
 <!doctype html>
 <html lang="en">

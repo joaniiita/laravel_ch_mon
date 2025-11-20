@@ -20,7 +20,7 @@ body{
 }
 
 .background-image{
-    background-image: url(images/background-globe-sunrise.svg);
+    background-image: url(../images/background-globe-sunrise.svg);
     background-size: auto;
 }
 .title-font{
