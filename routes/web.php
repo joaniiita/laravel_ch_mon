@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'home'])->name('home');
 //Route::get('/users/firmas', [UserController::class, 'peticionesFirmadas'])->middleware('auth');
 //
-//Route::controller(PetitionController::class)->group(function () {
-//    Route::get('peticiones/index', 'index')->name('peticiones.index');
+Route::controller(PetitionController::class)->group(function () {
+    Route::get('petitions/index', 'index')->name('petitions.index');
 //    Route::get('mispeticiones', 'listMine')->name('peticiones.mine');
 //    Route::get('peticionesfirmadas', 'peticionesFirmadas')->name('peticiones.peticionesfirmadas');
 //    Route::get('peticiones/{id}', 'show')->name('peticiones.show');
@@ -20,6 +20,6 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 //    Route::put('peticiones/{id}', 'update')->name('peticiones.update');
 //    Route::post('peticiones/firmar/{id}', 'firmar')->name('peticiones.firmar');
 //    Route::get('peticiones/edit/{id}', 'update')->name('peticiones.edit');
-//});
+});
 
 

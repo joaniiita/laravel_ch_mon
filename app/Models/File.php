@@ -10,7 +10,7 @@ class File extends Model
 
     protected $fillable = [
         'name',
-        'path',
+        'file_path',
         'petition_id',
     ];
 
