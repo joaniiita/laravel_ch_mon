@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Petition;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     public function home(){
-        return view('pages.home');
+        $petitions = Petition::all();
+        return view('pages.home', compact('petitions'));
     }
 }

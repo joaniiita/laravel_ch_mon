@@ -211,7 +211,7 @@
            <h2 class="fw-bold fs-4 mb-3 mt-5">Peticiones patrocinadas por otros usuarios de Change.org</h2>
            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
                @foreach($petitions as $petition)
-                   <a href=" " class="text-decoration-none">
+                   <a href="{{route('/petitions/$petition->id')}}" class="text-decoration-none">
                        <div class="col">
                            <div class="card shadow p-0 h-100">
                                <img src=" {{ asset('assets/images/leyDelMenor.webp') }} " class="card-img-top border-bottom object-fit-cover" alt="Ley acoso escolar">
