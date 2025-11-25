@@ -52,7 +52,7 @@
                     </li>
 
                     <li class="nav-item d-lg-none mt-2">
-                        <a class="nav-link text-dark" href="#">Entrar o regístrate</a>
+                        <a class="nav-link text-dark" href="{{route('login')}}">Entrar o regístrate</a>
                     </li>
                 </ul>
 
@@ -60,10 +60,26 @@
                     <li class="nav-item me-3">
                         <a class="btn btn-outline-dark  border-dark fw-bold py-2 px-3" href=" ">Iniciar una petición</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Entrar</a>
-                    </li>
+                    @if(!Auth::check())
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{route('login')}}">Entrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{route('register')}}">Registrarse</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="nav-link btn btn-link text-dark p-0 m-0">Logout</button>
+                            </form>
+                        </li>
+
+                    @endif
+
                 </ul>
+
+
 
             </div>
 
@@ -73,7 +89,7 @@
 
 @yield('content')
 
-<footer class=" pt-5 pb-3 border-top">
+<footer class=" pt-5 pb-3 border-top mt-5">
     <div class="container ">
         <div class="row mb-5 border-bottom ">
 

@@ -1,5 +1,5 @@
-@extends('layouts.public');
-@section('content');
+@extends('layouts.public')
+@section('content')
 
 <!--        Centro con posiciones absolutas y relativas-->
 <section class="g pt-2 text-center container background-image d-none d-xxl-block ">
@@ -363,7 +363,7 @@
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
         @foreach($petitions as $petition)
-            <a href=" " class="text-decoration-none">
+            <a href="{{route('petitions.show', $petition->id)}}" class="text-decoration-none">
                 <div class="col">
                     <div class="card shadow p-0 h-100">
                         <img src=" {{ asset('assets/images/leyDelMenor.webp') }} " class="card-img-top border-bottom object-fit-cover" alt="Ley acoso escolar">
@@ -378,7 +378,7 @@
                                     </span>
                                 {{$petition->signers}} firmas</p>
 
-                            <button class="btn btn-outline-dark-grey col-12 py-2 fw-bold">
+                            <button class="btn btn-outline-dark-grey col-12 py-2 fw-bold" onclick="window.location.href='{{ route('petitions.show', $petition->id) }}'">
                                 Firmar esta petición
                             </button>
                         </div>

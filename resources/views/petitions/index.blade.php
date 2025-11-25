@@ -4,7 +4,7 @@
 
    <div class="container mb-5">
        <section>
-           <div class=" mt-5  text-left text-md-center ">
+           <div class=" mt-5 text-left text-md-center ">
                <div class="mb-3 row">
                    <h1 class="fw-bold title-font ">Descubre tu próxima causa</h1>
                    <p class="fw-normal fs-4 d-none d-lg-block ">Explora millones de peticiones y encuentra las que te interesan</p>
@@ -211,7 +211,7 @@
            <h2 class="fw-bold fs-4 mb-3 mt-5">Peticiones patrocinadas por otros usuarios de Change.org</h2>
            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
                @foreach($petitions as $petition)
-                   <a href="{{route('/petitions/$petition->id')}}" class="text-decoration-none">
+                   <a href="{{ route('petitions.show', $petition->id) }}" class="text-decoration-none">
                        <div class="col">
                            <div class="card shadow p-0 h-100">
                                <img src=" {{ asset('assets/images/leyDelMenor.webp') }} " class="card-img-top border-bottom object-fit-cover" alt="Ley acoso escolar">
