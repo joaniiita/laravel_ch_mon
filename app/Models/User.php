@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image'
     ];
 
     /**
@@ -51,6 +52,6 @@ class User extends Authenticatable
     }
 
     public function signPetition(){
-        return $this->belongsToMany(Petition::class, 'petition_user');
+        return $this->belongsToMany(Petition::class, 'petition_user', 'user_id', 'petition_id');
     }
 }

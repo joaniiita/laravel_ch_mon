@@ -325,40 +325,17 @@
     <p class="fw-normal fs-5">Encuentra peticiones que te conmuevan y alza tu voz para lograr el cambio.</p>
     <div class="d-flex flex-wrap justify-content-start">
 
-        <a href="#" class="btn btn-outline-dark-blue text-18px me-2 my-1 d-flex align-items-center">
-            Sanidad
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
-            </svg>
-        </a>
+        @foreach($categories as $category)
+            <a href="#" class="btn btn-outline-dark-blue text-18px me-2 my-1 d-flex align-items-center">
+                {{$category->name}}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                </svg>
+            </a>
 
-        <a href="#" class="btn btn-outline-dark-blue text-18px me-2 my-1 d-flex align-items-center">
-            Animales
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-            </svg>
-        </a>
+        @endforeach
 
-        <a href="#" class="btn btn-outline-dark-blue text-18px me-2 my-1 d-flex align-items-center">
-            Medio Ambiente
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-            </svg>
-        </a>
 
-        <a href="#" class="btn btn-outline-dark-blue text-18px me-2 my-1 d-flex align-items-center">
-            Educación
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
-            </svg>
-        </a>
-
-        <a href="#" class="btn btn-outline-dark-blue text-18px my-1 d-flex align-items-center">
-            Justicia Económica
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-            </svg>
-        </a>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">

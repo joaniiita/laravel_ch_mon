@@ -10,7 +10,7 @@
 
                 <div class="col-12 col-lg-7">
 
-                    <img src="images/noEsCosaDeNinos.webp" class="img-fluid rounded-3 mb-4 col-12 " alt="Kira López">
+                    <img src="{{asset('assets/images/' . $petition->image)}}" class="img-fluid rounded-3 mb-4 col-12 " alt="Kira López">
 
                     <h2 class="fw-bold fs-1">El problema</h2>
                     <div style="height: auto;" class="fw-normal">
@@ -31,10 +31,10 @@
 
                         <div class="d-flex border-top  justify-content-between align-items-center pt-3 mb-5 pb-5">
                             <div class="d-flex align-items-center row col-6">
-                                <img src="images/imagenPerfilJose.webp" class="img-fluid rounded-circle image-profile " alt="">
+                                <img src="{{ asset('assets/images/' . $user->image) }}" class="img-fluid rounded-circle image-profile " alt="">
                                 <div class="align-items-center mt-3 col-8">
                                     <h3 class="fs-5 fw-bold">{{$user->name}}</h3>
-                                    <p>Creado de la petición</p>
+                                    <p>Creador de la petición</p>
                                 </div>
                             </div>
                             <div class="col-5">
@@ -47,7 +47,7 @@
                         <div class="border-top pb-5">
                             <h2 class="mt-4 fs-2 fw-bold">Los destinarios de la petición</h2>
                             <div class="d-flex align-items-center shadow rounded-3 py-3 px-4 mt-3  row ">
-                                <img src="images/imagenGobierno.webp" class="img-fluid rounded-circle image-profile" alt="">
+                                <img src="{{asset('assets/images/defaultProfile.jpg')}}" class="img-fluid rounded-circle image-profile" alt="">
                                 <div class="align-items-center mt-3 ms-3 col-8">
                                     <a href="https://www.change.org/decision-makers/ministerio-de-educacion-cultura-y-deportes?source_location=petition_details_gamma" class="fs-5 text-gray">Ministerio de Educación, Cultura y Deportes</a>
                                     <p>Gobierno de España</p>
@@ -60,7 +60,7 @@
                             <h2 class="mt-4 fs-1 fw-bold">Opiniones de firmantes</h2>
                             <h4 class="mt-3 fw-normal">Comentarios destacados</h4>
                             <div class="d-flex align-items-center rounded-3 py-3 px-4 mt-3  row border">
-                                <img src="images/santiagoProfile.webp" alt="" class="img-fluid rounded-circle image-profile" >
+                                <img src="{{asset('assets/images/defaultProfile.jpg')}}" alt="" class="img-fluid rounded-circle image-profile" >
                                 <div class="align-items-center mt-3 col-8">
                                     <h3 class="fs-5"><strong>Santiago</strong>, Alcorcón</h3>
                                     <p >hace 2 semanas</p>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center rounded-3 py-3 px-4 mt-3  row border">
-                                <img src="images/default-avatar-gray-128.svg" alt="" class="img-fluid rounded-circle image-profile" >
+                                <img src="{{asset('assets/images/defaultProfile.jpg')}}" alt="" class="img-fluid rounded-circle image-profile" >
                                 <div class="align-items-center mt-3 col-8">
                                     <h3 class="fs-5"><strong>África</strong>, Alcázar de San Juan</h3>
                                     <p >hace 2 semanas</p>
@@ -104,7 +104,7 @@
                     <div class="sticky-top shadow rounded-3 pt-3">
 
                         <div class="text-center">
-                            <h2 class="fw-bold fs-1 pt-4">259.880</h2>
+                            <h2 class="fw-bold fs-1 pt-4">{{$petition->signers}}</h2>
 
                             <p class="fw-normal" data-bs-toggle="collapse" href="#firmaInfo" aria-expanded="false" aria-controls="firmaInfo" style="cursor: pointer;">
                                 Firmas verificadas
@@ -124,22 +124,38 @@
 
                         <div class="border-top mx-3 p-3">
                             <h3 class="fw-bold fs-4 mb-3">Firma esta petición</h3>
-                            <form>
+                            <form method="POST" action="{{ route('petitions.sign', $petition) }}">
+                                @csrf
+                                @if($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                {{$error}}
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="mb-3">
                                     <label for="name" class="form-label fw-normal">Nombre</label>
-                                    <input type="text" class="form-control" id="name">
+                                    <input type="text" class="form-control" id="name" name="name">
+                                    @error('name')
+                                        <div class="text-danger small">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="surname" class="form-label fw-normal">Apellidos</label>
-                                    <input type="text" class="form-control" id="surname">
+                                    <input type="text" class="form-control" id="surname" name="surname">
+                                    @error('surname')
+                                        <div class="text-danger small">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label fw-normal">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="email">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="city" class="form-label fw-normal">Zaragoza, 50007</label>
-                                    <p class="form-text mt-0 mb-0">España</p>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                    @error('email')
+                                        <div class="text-danger small">{{ $message }}</div>
+                                    @enderror
+
                                 </div>
 
                                 <hr>

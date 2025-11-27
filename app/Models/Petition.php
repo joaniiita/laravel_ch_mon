@@ -30,8 +30,9 @@ class Petition extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function signers(){
-        return $this->belongsToMany(User::class, 'petition_user');
+    public function signers()
+    {
+        return $this->belongsToMany(User::class, 'petition_user', 'petition_id', 'user_id');
     }
 
     public function files(){
