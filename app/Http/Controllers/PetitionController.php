@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Petition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,8 @@ class PetitionController extends Controller
     public function index()
     {
         $petitions = Petition::all();
+        $files = File::all();
+
         return view('petitions.index', compact('petitions'));
     }
 
@@ -25,14 +28,15 @@ class PetitionController extends Controller
     public function listMine()
     {
         $id = Auth::id();
-        $petitions = Petition::all();
-        $myPetitions = $petitions->where('user_id', $id);
+        $myPetitions = Petition::where('user_id', $id)->paginate(5);
+
         return view('petitions.mine', compact('myPetitions'));
     }
 
     public function create(Request $request)
     {
-        return view('petitions.edit-add');
+//        return view('petitions.edit-add');
+        return view('petitions.create');
     }
 
 //    public function sign(Request $request, Petition $petition)
@@ -100,35 +104,46 @@ class PetitionController extends Controller
             'description' => 'required',
             'destinatary' => 'required',
             'category' => 'required',
-            'file' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|file|mimes:jpeg,png,jpg,svg',
         ]);
 
-        $input = $request->all();
-
         try {
-            $category = Category::findOrFail($input['category']);
+            // Tengo el nombre y tengoq ue sacar el id -> select id from categories where name = $category
+            $categoryName = $request->category;
+            $categoryId = Category::where('name', $categoryName)->first()->id;
             $user = Auth::user();
-            $petition = new Petition($input);
-            $petition->user()->associate($user);
-            $petition->category()->associate($category);
 
-            $petition->signers = 0;
-            $petition->status = 'pending';
+            $petition = Petition::create([
+               'title' => $request->get('title'),
+               'description' => $request->get('description'),
+               'destinatary' => $request->get('destinatary'),
+               'category_id' => $categoryId,
+                'user_id' => $user->id,
+                'signers' => 0,
+                'status' => 'pending'
+
+            ]);
+
+            $petition->user()->associate($user->id);
+            $petition->category()->associate($categoryId);
 
             $response = $petition->save();
-//            if ($response) {
-//                $response_file = $this->fileUpload($request, $petition->id);
-//                if ($response_file){
-//                    return redirect('/mypetitions');
-//                }
-//                return back()->withErrors(['Error creando la petición'])->withInput();
-//            }
+            if ($response) {
+                $response_file = $this->fileUpload($request, $petition->id);
+                if ($response_file){
+                    return redirect('/mypetitions');
+                }
+            } else {
+                return back()->withErrors(['Error creando la petición'])->withInput();
+            }
 
         } catch (\Exception $e){
             return back()->withErrors([$e->getMessage()])->withInput();
         }
         return redirect('/mypetitions');
     }
+
+
 
     public function signedPetitions()
     {
@@ -140,5 +155,24 @@ class PetitionController extends Controller
         }
         return view('petitions.signedPetitions', compact('petitions'));
     }
+
+    private function fileUpload(Request $request, $id)
+    {
+        $image = null;
+        if ($request->hasFile('image')) {
+            $image = time().'.'.$request->image->extension();
+            $request->image->move(public_path('assets/images/petitions'), $image);
+        }
+
+        $petition = Petition::findOrFail($id);
+
+        $petition->files()->create([
+            'name' => $image,
+            'file_path' => $image,
+            'petition_id' => $id
+        ]);
+
+    }
+
 
 }

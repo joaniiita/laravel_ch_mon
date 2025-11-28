@@ -61,6 +61,16 @@ body{
   object-fit: cover;
 }
 
+.img-height{
+    height: 15rem;
+}
+
+.show-img-height{
+    height: 20rem;
+    object-fit: cover;
+}
+
+
 .margin{
     margin-top: -1rem;
 }

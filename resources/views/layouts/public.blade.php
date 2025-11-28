@@ -24,7 +24,7 @@
 
             <a class="navbar-brand fs-3 fw-bold text-danger" href="{{ route('home') }}">change.org</a>
 
-            <a href="iniciarPeticion.html" class="btn btn-outline-dark d-lg-none border-dark fw-bold py-2 px-2 ms-auto me-2">
+            <a href="{{route('petitions.create')}}" class="btn btn-outline-dark d-lg-none border-dark fw-bold py-2 px-2 ms-auto me-2">
                 Iniciar una petición
             </a>
 
@@ -35,12 +35,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item me-3">
-                        <a class="nav-link text-dark" href="{{route('petitions.mine')}}">Mis peticiones</a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link text-dark" href="#">Programa de socios/as</a>
-                    </li>
+                    @if(Auth::check())
+                        <li class="nav-item me-3">
+                            <a class="nav-link text-dark" href="{{route('petitions.mine')}}">Mis peticiones</a>
+                        </li><li class="nav-item me-3">
+                            <a class="nav-link text-dark" href="{{route('petitions.signedPetitions')}}">Mis firmas</a>
+                        </li>
+
+                    @endif
+{{--                    <li class="nav-item me-3">--}}
+{{--                        <a class="nav-link text-dark" href="#">Programa de socios/as</a>--}}
+{{--                    </li>--}}
                     <li class="nav-item me-3">
                         <a class="nav-link text-dark" href=" {{ route('petitions.index')  }} ">
                             <span class="d-inline-flex align-items-center">
@@ -52,14 +57,27 @@
                         </a>
                     </li>
 
-                    <li class="nav-item d-lg-none mt-2">
-                        <a class="nav-link text-dark" href="{{route('login')}}">Entrar o regístrate</a>
-                    </li>
+                    @if(!Auth::check())
+                        <li class="nav-item d-lg-none">
+                            <a class="nav-link text-dark" href="{{route('login')}}">Entrar</a>
+                        </li>
+                        <li class="nav-item d-lg-none">
+                            <a class="nav-link text-dark" href="{{route('register')}}">Registrarse</a>
+                        </li>
+                    @else
+                        <li class="nav-item mt-2 d-lg-none">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="nav-link btn btn-link text-dark p-0 m-0">Logout</button>
+                            </form>
+                        </li>
+
+                    @endif
                 </ul>
 
                 <ul class="navbar-nav d-none d-lg-flex align-items-center">
                     <li class="nav-item me-3">
-                        <a class="btn btn-outline-dark  border-dark fw-bold py-2 px-3" href=" ">Iniciar una petición</a>
+                        <a class="btn btn-outline-dark  border-dark fw-bold py-2 px-3" href="{{route('petitions.create')}} ">Iniciar una petición</a>
                     </li>
                     @if(!Auth::check())
                         <li class="nav-item">

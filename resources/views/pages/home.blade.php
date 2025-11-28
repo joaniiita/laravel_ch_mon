@@ -21,7 +21,7 @@
                 <h1 class="title-font fw-bold">El cambio comienza aquí<span class="text-danger">.</span></h1>
                 <p class="fs-4 fw-normal mx-5">Únete a <span class="fw-bold">566.742.419</span> personas que están impulsando un cambio real en sus comunidades.</p>
                 <div class="d-flex gap-4 justify-content-center">
-                    <a href="iniciarPeticion.html" class="btn btn-warning fw-bold fs-5 btn-yellow transition py-3 px-4">Crear una petición</a>
+                    <a href="{{route('petitions.create')}}" class="btn btn-warning fw-bold fs-5 btn-yellow transition py-3 px-4">Crear una petición</a>
                     <button class="btn btn-outline-dark border rounded fw-bold fs-5 transition py-3 px-4">Comenzar con IA</button>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                 <!--                        Arriba izquierda-->
                 <div class="carousel-item active">
                     <div class="position-relative py-5 px-2">
-                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/changeorg_cuantovaleunavida_entregafirmas5.jpg" alt="Petición 1 - Cáncer de Mama">
+                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/changeorg_cuantovaleunavida_entregafirmas5.jpg') }}" alt="Petición 1 - Cáncer de Mama">
 
                         <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                             <p class="m-0 d-flex align-items-center justify-content-center">
@@ -118,7 +118,7 @@
                 <!--                        Abajo izquierda-->
                 <div class="carousel-item">
                     <div class="position-relative py-5 px-2">
-                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/desiderioysoledad_los3%20(1).webp" alt="Petición 2">
+                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/soloelpueblosalvaalpueblo5.webp') }}" alt="Petición 2">
                         <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                             <p class="m-0 d-flex align-items-center justify-content-center">
                                 <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!
@@ -131,7 +131,7 @@
                 <!--                        Arriba derecha-->
                 <div class="carousel-item">
                     <div class="position-relative py-5 px-2">
-                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/soloelpueblosalvaalpueblo5.webp" alt="Petición 3">
+                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/desiderioysoledad_los3%20(1).webp') }}" alt="Petición 3">
                         <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                             <p class="m-0 d-flex align-items-center justify-content-center">
                                 <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!
@@ -145,7 +145,7 @@
                 <!--                        Abajo izquierda-->
                 <div class="carousel-item">
                     <div class="position-relative py-5 px-2">
-                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/entrega_firmas_guardias_medicas_4r%20(1).webp" alt="Petición 3">
+                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/desiderioysoledad_los3%20(1).webp') }}" alt="Petición 3">
 
                         <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                             <p class="m-0 d-flex align-items-center justify-content-center">
@@ -163,7 +163,7 @@
                 <!--                        Abajo -->
                 <div class="carousel-item">
                     <div class="position-relative py-5 px-2">
-                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="./images/pornagore_elpais.webp" alt="Petición 3">
+                        <img class="img-fluid rounded-circle round-img position-relative z-0 custom-shadow" src="{{ asset('assets/images/desiderioysoledad_los3%20(1).webp') }}" alt="Petición 3">
                         <div class="bg-light position-absolute top-75 start-50 translate-middle px-5 border rounded-pill z-1 py-2 custom-pill">
                             <p class="m-0 d-flex align-items-center justify-content-center">
                                 <span class="text-danger fw-normal punto me-2">·</span> ¡Victoria!
@@ -343,7 +343,7 @@
             <a href="{{route('petitions.show', $petition->id)}}" class="text-decoration-none">
                 <div class="col">
                     <div class="card shadow p-0 h-100">
-                        <img src=" {{ asset('assets/images/leyDelMenor.webp') }} " class="card-img-top border-bottom object-fit-cover" alt="Ley acoso escolar">
+                        <img src=" {{  asset('assets/images/petitions/' . optional($petition->files->first())->file_path)  }} " class="card-img-top img-height border-bottom object-fit-cover" alt="Ley acoso escolar">
                         <div class="card-body">
                             <h5 class="card-title text-clamp fw-bold mt-1">{{ $petition->title }}</h5>
                             <p class="text-secondary fw-normal">{{ $petition->description }}</p>

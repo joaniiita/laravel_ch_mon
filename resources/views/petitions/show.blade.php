@@ -10,7 +10,7 @@
 
                 <div class="col-12 col-lg-7">
 
-                    <img src="{{asset('assets/images/' . $petition->image)}}" class="img-fluid rounded-3 mb-4 col-12 " alt="Kira López">
+                    <img src="{{ asset('assets/images/petitions/' . optional($petition->files->first())->file_path) }}" class="img-fluid rounded-3  show-img-height mb-4 col-12 " alt="Kira López">
 
                     <h2 class="fw-bold fs-1">El problema</h2>
                     <div style="height: auto;" class="fw-normal">

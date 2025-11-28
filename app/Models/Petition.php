@@ -9,17 +9,18 @@ class Petition extends Model
     protected $table = 'petitions';
 
     protected $fillable = [
-        'titulo',
-        'descripcion',
-        'destinatario',
-        'firmantes',
-        'estado',
+        'title',
+        'description',
+        'destinatary',
+        'signers',
+        'status',
         'image',
+        'user_id',
+        'category_id',
     ];
 
     protected $hidden = [
-        'user_id',
-        'categoria_id',
+
     ];
 
     public function user(){

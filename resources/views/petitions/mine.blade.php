@@ -8,7 +8,9 @@
                <a href="{{ route('petitions.show', $petition->id) }}" class="text-decoration-none">
                    <div class="col">
                        <div class="card shadow p-0 h-100">
-                           <img src=" {{ asset('assets/images/leyDelMenor.webp') }} " class="card-img-top border-bottom object-fit-cover" alt="Ley acoso escolar">
+
+                           <img src=" {{  asset('assets/images/petitions/' . optional($petition->files->first())->file_path)  }} " class="card-img-top img-height border-bottom object-fit-cover" alt="Ley acoso escolar">
+
                            <div class="card-body">
                                <h5 class="card-title text-clamp fw-bold mt-1">{{ $petition->title }}</h5>
                                <p class="text-secondary fw-normal">{{ $petition->description }}</p>

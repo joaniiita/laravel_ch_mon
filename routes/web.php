@@ -25,16 +25,19 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 //
 Route::controller(PetitionController::class)->group(function () {
     Route::get('petitions/index', 'index')->name('petitions.index');
-    Route::get('mypetitions', 'listMine')->name('petitions.mine');
-//    Route::get('peticionesfirmadas', 'peticionesFirmadas')->name('peticiones.peticionesfirmadas');
+    Route::get('mypetitions', 'listMine')->name('petitions.mine')->middleware('auth');
+    Route::get('signedPetitions', 'signedPetitions')->name('petitions.signedPetitions')->middleware('auth');
     Route::get('petitions/{id}', 'show')->name('petitions.show');
-//    Route::get('peticion/add', 'create')->name('peticiones.create');
-//    Route::post('peticion', 'store')->name('peticiones.store');
+    Route::get('petition/add', 'create')->name('petitions.create')->middleware('auth');
+    Route::post('petition', 'store')->name('petitions.store')->middleware('auth');
 //    Route::delete('peticiones/{id}', 'delete')->name('peticiones.delete');
 //    Route::put('peticiones/{id}', 'update')->name('peticiones.update');
     Route::post('petition/sign/{id}', 'sign')->name('petitions.sign')->middleware('auth');
 //    Route::get('peticiones/edit/{id}', 'update')->name('peticiones.edit');
 });
+
+
+
 
 
 require __DIR__.'/auth.php';
