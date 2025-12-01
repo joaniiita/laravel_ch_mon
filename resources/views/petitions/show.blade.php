@@ -99,8 +99,18 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-4">
 
+                <div class="col-12 col-lg-4">
+                    @if($petition->user_id === Auth::id())
+                        <div class="row mb-3 gap-2 d-flex justify-content-around">
+                            <form method="POST" class="row gap-2 d-flex justify-content-around" action="{{ route('petitions.delete', $petition->id) }}">
+                                <a href="{{route('petitions.edit', $petition->id)}}" class="btn btn-warning col-5">Editar</a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger col-5">Borrar</button>
+                            </form>
+                        </div>
+                    @endif
                     <div class="sticky-top shadow rounded-3 pt-3">
 
                         <div class="text-center">

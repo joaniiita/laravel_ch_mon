@@ -30,10 +30,10 @@ Route::controller(PetitionController::class)->group(function () {
     Route::get('petitions/{id}', 'show')->name('petitions.show');
     Route::get('petition/add', 'create')->name('petitions.create')->middleware('auth');
     Route::post('petition', 'store')->name('petitions.store')->middleware('auth');
-//    Route::delete('peticiones/{id}', 'delete')->name('peticiones.delete');
-//    Route::put('peticiones/{id}', 'update')->name('peticiones.update');
+    Route::delete('petition/{id}', 'delete')->name('petitions.delete');
+    Route::put('petition/{id}', 'update')->name('petitions.update');
     Route::post('petition/sign/{id}', 'sign')->name('petitions.sign')->middleware('auth');
-//    Route::get('peticiones/edit/{id}', 'update')->name('peticiones.edit');
+    Route::get('petition/edit/{id}', 'edit')->name('petitions.edit');
 });
 
 

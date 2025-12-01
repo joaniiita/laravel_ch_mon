@@ -7,13 +7,13 @@ use App\Models\File;
 use App\Models\Petition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PetitionController extends Controller
 {
     public function index()
     {
         $petitions = Petition::all();
-        $files = File::all();
 
         return view('petitions.index', compact('petitions'));
     }
@@ -124,11 +124,7 @@ class PetitionController extends Controller
 
             ]);
 
-            $petition->user()->associate($user->id);
-            $petition->category()->associate($categoryId);
-
-            $response = $petition->save();
-            if ($response) {
+            if ($request->hasFile('image')) {
                 $response_file = $this->fileUpload($request, $petition->id);
                 if ($response_file){
                     return redirect('/mypetitions');
@@ -143,7 +139,107 @@ class PetitionController extends Controller
         return redirect('/mypetitions');
     }
 
+    public function edit($id){
+        $petition = Petition::findOrFail($id);
+        return view('petitions.edit', compact('petition'));
+    }
 
+//    public function update(Request $request, $id)
+//    {
+//        $request->validate([
+//            'title' => 'required|max:255',
+//            'description' => 'required',
+//            'destinatary' => 'required',
+//            'category' => 'required',
+//            'image' => 'nullable|file|mimes:jpeg,png,jpg,svg'
+//        ]);
+//
+//        try {
+//
+//            $petition = Petition::findOrFail($id);
+//
+//            $categoryName = $request->category;
+//            $categoryId = Category::where('name', $categoryName)->first()->id;
+//            $file = File::where('petition_id', $id)->first()->file_path;
+//
+//            if ($request->hasFile('image')) {
+//                if ($file) {
+//                    Storage::disk('public')->delete($file);
+//                    $petition->files()->delete();
+//                }
+//
+//                $data = $this->fileUpload($request, $id);
+//
+//                $petition->files()->associate($data['file_path']);
+//            }
+//
+//            $petition->update([
+//                'title' => $request->title,
+//                'description' => $request->description,
+//                'destinatary' => $request->destinatary,
+//                'category_id' => $categoryId,
+//                'status' => 'pending',
+//            ]);
+//
+//        } catch (\Exception $e){
+//            return back()->withErrors([$e->getMessage()])->withInput();
+//        }
+//
+//        return redirect('/mypetitions');
+//    }
+
+//    public function update(Request $request, $id)
+//    {
+//        $request->validate([
+//            'title' => 'required|max:255',
+//            'description' => 'required',
+//            'destinatary' => 'required',
+//            'category' => 'required',
+//            'image' => 'nullable|file|mimes:jpeg,png,jpg,svg'
+//        ]);
+//
+//        try {
+//
+//            $petition = Petition::findOrFail($id);
+//
+//            $categoryName = $request->category;
+//            $categoryId = Category::where('name', $categoryName)->first()->id;
+//
+//            $petition->title = $request->title;
+//            $petition->description = $request->description;
+//            $petition->destinatary = $request->destinatary;
+//            $petition->category_id = $categoryId;
+//            $petition->status = 'pending';
+//            $petition->save();
+//
+//            if ($request->hasFile('image')) {
+//                $file = $request->file('image');
+//                $path = $file->store('petitions', 'public');
+//
+//                if ($petition->files) {
+//                    $petition->files->file_path = $path;
+//                    $petition->files->save();
+//                } else {
+//                    $petition->files()->create([
+//                        'file_path' => $path,
+//                    ]);
+//                }
+//            }
+//
+//        } catch (\Exception $e){
+//            return back()->withErrors([$e->getMessage()])->withInput();
+//        }
+//
+//        return redirect('/mypetitions');
+//    }
+
+
+
+    public function delete($id){
+        $petition = Petition::findOrFail($id);
+         $petition->delete();
+         return redirect('/mypetitions');
+    }
 
     public function signedPetitions()
     {
