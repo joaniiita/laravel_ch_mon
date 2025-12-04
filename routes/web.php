@@ -3,6 +3,7 @@
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,24 +20,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 Route::get('/', [PageController::class, 'home'])->name('home');
-//Route::get('/users/firmas', [UserController::class, 'peticionesFirmadas'])->middleware('auth');
-//
+
 Route::controller(PetitionController::class)->group(function () {
     Route::get('petitions/index', 'index')->name('petitions.index');
-    Route::get('mypetitions', 'listMine')->name('petitions.mine')->middleware('auth');
-    Route::get('signedPetitions', 'signedPetitions')->name('petitions.signedPetitions')->middleware('auth');
     Route::get('petitions/{id}', 'show')->name('petitions.show');
-    Route::get('petition/add', 'create')->name('petitions.create')->middleware('auth');
-    Route::post('petition', 'store')->name('petitions.store')->middleware('auth');
     Route::delete('petition/{id}', 'delete')->name('petitions.delete');
     Route::put('petition/{id}', 'update')->name('petitions.update');
-    Route::post('petition/sign/{id}', 'sign')->name('petitions.sign')->middleware('auth');
     Route::get('petition/edit/{id}', 'edit')->name('petitions.edit');
 });
 
-
+Route::controller(PetitionController::class)->middleware('auth')->group(function () {
+    Route::get('mypetitions', 'listMine')->name('petitions.mine');
+    Route::get('signedPetitions', 'signedPetitions')->name('petitions.signedPetitions');
+    Route::get('petition/add', 'create')->name('petitions.create');
+    Route::post('petition', 'store')->name('petitions.store');
+    Route::post('petition/sign/{id}', 'sign')->name('petitions.sign');
+});
 
 
 

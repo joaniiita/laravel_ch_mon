@@ -78,9 +78,9 @@ class PetitionController extends Controller
         ]);
 
         try {
-            if (Auth::check()) {
-                $petition = Petition::findOrFail($id);
-                $user = Auth::user();
+            $petition = Petition::findOrFail($id);
+            $user = Auth::user();
+            if (Auth::check() && ($user->email === $request->email)) {
 
                 if ($petition->signers()->where('user_id', $user->id)->exists()) {
                     return back()->withErrors(['Ya has firmado esta petición'])->withInput();
@@ -90,6 +90,8 @@ class PetitionController extends Controller
 
                 $petition->signers = $petition->signers + 1;
                 $petition->save();
+            } else {
+                return back()->withErrors(['Email incorrecto'])->withInput();
             }
 
         } catch (\Exception $e) {
