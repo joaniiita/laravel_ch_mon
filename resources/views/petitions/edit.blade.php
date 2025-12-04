@@ -64,11 +64,12 @@
                         <form method="POST" action="{{route('petitions.update', $petition->id)}}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <img src="{{ asset('assets/images/petitions/' . optional($petition->files->first())->file_path) }}" class="img-fluid rounded-3  show-img-height mb-4 col-12 " alt="Kira López">
                             <div class="mb-3">
                                 <label for="destinatary" class="form-label fs-5">Localidad para la geolocalización</label>
                                 <select class="form-select" aria-label="Default select example" id="localidad" name="destinatary">
-                                    <option value="1">Logroño</option>
-                                    <option value="2">Haro</option>
+                                    <option value="logrono">Logroño</option>
+                                    <option value="haro">Haro</option>
                                 </select>
                             </div>
 
@@ -87,14 +88,15 @@
                                 <div class="text-danger small">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{--                            <select name="category" id="category">--}}
-                            {{--                                @foreach($categories as $category)--}}
-                            {{--                                    <option value="{{$category->id}}">{{$category->name}}</option>--}}
-                            {{--                                @endforeach--}}
-                            {{--                            </select>--}}
+
                             <div class="mb-3">
                                 <label for="category" class="form-label fs-5">Categoría</label>
-                                <input type="text" class="form-control" id="category" required name="category" value="{{$petition->category->name}}">
+                                <select class="form-select" aria-label="Default select example" name="category" id="category">
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+
                                 @error('category')
                                 <div class="text-danger small">{{ $message }}</div>
                                 @enderror

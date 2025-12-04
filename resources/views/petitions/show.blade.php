@@ -103,14 +103,44 @@
                 <div class="col-12 col-lg-4">
                     @if($petition->user_id === Auth::id())
                         <div class="row mb-3 gap-2 d-flex justify-content-around">
-                            <form method="POST" class="row gap-2 d-flex justify-content-around" action="{{ route('petitions.delete', $petition->id) }}">
-                                <a href="{{route('petitions.edit', $petition->id)}}" class="btn btn-warning col-5">Editar</a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger col-5">Borrar</button>
-                            </form>
+
+                            <a href="{{ route('petitions.edit', $petition->id) }}" class="btn btn-warning col-5">
+                                Editar
+                            </a>
+
+                            <button type="button" class="btn btn-danger col-5" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                Borrar
+                            </button>
+
+                        </div>
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        ¿Estás seguro de que deseas eliminar esta petición?
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                                        <form method="POST" action="{{ route('petitions.delete', $petition->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     @endif
+
                     <div class="sticky-top shadow rounded-3 pt-3">
 
                         <div class="text-center">

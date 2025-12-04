@@ -87,14 +87,16 @@
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
                             </div>
-{{--                            <select name="category" id="category">--}}
-{{--                                @foreach($categories as $category)--}}
-{{--                                    <option value="{{$category->id}}">{{$category->name}}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
+
+
                             <div class="mb-3">
                                 <label for="category" class="form-label fs-5">Categoría</label>
-                                <input type="text" class="form-control" id="category" required name="category">
+                                <select class="form-select" aria-label="Default select example" name="category" id="category">
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+
                                 @error('category')
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror

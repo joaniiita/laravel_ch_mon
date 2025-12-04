@@ -35,8 +35,8 @@ class PetitionController extends Controller
 
     public function create(Request $request)
     {
-//        return view('petitions.edit-add');
-        return view('petitions.create');
+        $categories = Category::all();
+        return view('petitions.create', compact('categories'));
     }
 
 //    public function sign(Request $request, Petition $petition)
@@ -78,17 +78,19 @@ class PetitionController extends Controller
         ]);
 
         try {
-            $petition = Petition::findOrFail($id);
-            $user = Auth::user();
+            if (Auth::check()) {
+                $petition = Petition::findOrFail($id);
+                $user = Auth::user();
 
-            if ($petition->signers()->where('user_id', $user->id)->exists()) {
-                return back()->withErrors(['Ya has firmado esta petición'])->withInput();
+                if ($petition->signers()->where('user_id', $user->id)->exists()) {
+                    return back()->withErrors(['Ya has firmado esta petición'])->withInput();
+                }
+
+                $petition->signers()->attach($user->id);
+
+                $petition->signers = $petition->signers + 1;
+                $petition->save();
             }
-
-            $petition->signers()->attach($user->id);
-
-            $petition->signers = $petition->signers + 1;
-            $petition->save();
 
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()])->withInput();
@@ -108,30 +110,30 @@ class PetitionController extends Controller
         ]);
 
         try {
-            // Tengo el nombre y tengoq ue sacar el id -> select id from categories where name = $category
-            $categoryName = $request->category;
-            $categoryId = Category::where('name', $categoryName)->first()->id;
-            $user = Auth::user();
 
-            $petition = Petition::create([
-               'title' => $request->get('title'),
-               'description' => $request->get('description'),
-               'destinatary' => $request->get('destinatary'),
-               'category_id' => $categoryId,
-                'user_id' => $user->id,
-                'signers' => 0,
-                'status' => 'pending'
+           if (Auth::check()) {
+               $user = Auth::user();
 
-            ]);
+               $petition = Petition::create([
+                   'title' => $request->get('title'),
+                   'description' => $request->get('description'),
+                   'destinatary' => $request->get('destinatary'),
+                   'category_id' => $request->get('category'),
+                   'user_id' => $user->id,
+                   'signers' => 0,
+                   'status' => 'pending'
 
-            if ($request->hasFile('image')) {
-                $response_file = $this->fileUpload($request, $petition->id);
-                if ($response_file){
-                    return redirect('/mypetitions');
-                }
-            } else {
-                return back()->withErrors(['Error creando la petición'])->withInput();
-            }
+               ]);
+
+               if ($request->hasFile('image')) {
+                   $response_file = $this->fileUpload($request, $petition->id);
+                   if ($response_file){
+                       return redirect('/mypetitions');
+                   }
+               } else {
+                   return back()->withErrors(['Error creando la petición'])->withInput();
+               }
+           }
 
         } catch (\Exception $e){
             return back()->withErrors([$e->getMessage()])->withInput();
@@ -141,52 +143,65 @@ class PetitionController extends Controller
 
     public function edit($id){
         $petition = Petition::findOrFail($id);
-        return view('petitions.edit', compact('petition'));
+        $categories = Category::all();
+        return view('petitions.edit', compact('petition', 'categories'));
     }
 
-//    public function update(Request $request, $id)
-//    {
-//        $request->validate([
-//            'title' => 'required|max:255',
-//            'description' => 'required',
-//            'destinatary' => 'required',
-//            'category' => 'required',
-//            'image' => 'nullable|file|mimes:jpeg,png,jpg,svg'
-//        ]);
-//
-//        try {
-//
-//            $petition = Petition::findOrFail($id);
-//
-//            $categoryName = $request->category;
-//            $categoryId = Category::where('name', $categoryName)->first()->id;
-//            $file = File::where('petition_id', $id)->first()->file_path;
-//
-//            if ($request->hasFile('image')) {
-//                if ($file) {
-//                    Storage::disk('public')->delete($file);
-//                    $petition->files()->delete();
-//                }
-//
-//                $data = $this->fileUpload($request, $id);
-//
-//                $petition->files()->associate($data['file_path']);
-//            }
-//
-//            $petition->update([
-//                'title' => $request->title,
-//                'description' => $request->description,
-//                'destinatary' => $request->destinatary,
-//                'category_id' => $categoryId,
-//                'status' => 'pending',
-//            ]);
-//
-//        } catch (\Exception $e){
-//            return back()->withErrors([$e->getMessage()])->withInput();
-//        }
-//
-//        return redirect('/mypetitions');
-//    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'destinatary' => 'required',
+            'category' => 'required',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,svg'
+        ]);
+
+        try {
+            $petition = Petition::findOrFail($id);
+            if (Auth::id() === $petition->user_id) {
+                $oldFile = File::where('petition_id', $petition->id)->first();
+
+                if ($request->hasFile('image')) {
+
+                    if ($oldFile) {
+                        $oldPath = public_path($oldFile->file_path);
+
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
+
+                        $oldFile->delete();
+                    }
+
+                    $image = $request->file('image');
+                    $newName = time() . '_' . $image->getClientOriginalName();
+                    $destination = 'assets/images/petitions/';
+                    $image->move(public_path($destination), $newName);
+
+                    File::create([
+                        'name' => $newName,
+                        'file_path' => $newName,
+                        'petition_id' => $petition->id
+                    ]);
+                }
+
+                $petition->update([
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'destinatary' => $request->destinatary,
+                    'category_id' => $request->category,
+                    'status' => 'pending',
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()])->withInput();
+        }
+
+        return redirect('/mypetitions');
+    }
+
 
 //    public function update(Request $request, $id)
 //    {
@@ -236,9 +251,25 @@ class PetitionController extends Controller
 
 
     public function delete($id){
-        $petition = Petition::findOrFail($id);
-         $petition->delete();
-         return redirect('/mypetitions');
+        if (Auth::check()) {
+            $petition = Petition::findOrFail($id);
+            $petition_img = File::where('petition_id', $petition->id)->first();
+
+            if ($petition_img) {
+                $petition_path = public_path($petition_img->file_path);
+
+                if (file_exists($petition_path)) {
+                    unlink($petition_path);
+                }
+
+                $petition_img->delete();
+            }
+
+
+            $petition->delete();
+
+        }
+        return redirect('/mypetitions');
     }
 
     public function signedPetitions()
