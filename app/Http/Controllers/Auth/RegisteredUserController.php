@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use function PHPUnit\Framework\isEmpty;
 
 class RegisteredUserController extends Controller
 {
@@ -37,11 +38,20 @@ class RegisteredUserController extends Controller
 
         $image = 'defaultProfile.jpg';
 
+        $users = User::all();
+
+        if ($users->isEmpty()) {
+            $role = 'admin';
+        } else {
+            $role = 'user';
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'image' => $image,
+            'role' => $role
         ]);
 
         event(new Registered($user));
