@@ -14,6 +14,7 @@ class AdminPetitionController extends Controller
 
     function home(){
         $petitions = Petition::all();
+
         return view('admin.petitions.index', compact('petitions'));
     }
 }
