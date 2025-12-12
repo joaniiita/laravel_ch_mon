@@ -13,7 +13,6 @@
                             <th>Image</th>
                             <th>Nombre</th>
                             <th>Email</th>
-                            <th>Contraseña</th>
                             <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
@@ -23,19 +22,18 @@
                             <tr>
                                 <td>{{$user->id}}</td>
                                 <td>
-                                    <img class="rounded-circle bg-secondary bg-opacity-25" src="{{ asset('assets/images/' . $user->image) }}" style="width: 35px; height: 35px;">
+                                    <img class="rounded-circle bg-secondary bg-opacity-25" src="{{ asset('assets/images/users/' . $user->image) }}" style="width: 35px; height: 35px;">
                                 </td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
-                                <td>{{$user->password}}</td>
                                 <td>{{$user->role}}</td>
                                 <td>
                                     <a href="{{route('adminusers.edit', $user->id)}}" class="btn btn-sm btn-success me-1">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
-                                    <button class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
+                                    <a href="{{route('adminusers.show', $user->id)}}" class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
                                         <i class="bi bi-eye-fill"></i>
-                                    </button>
+                                    </a>
 
                                     <button type="button"
                                             class="btn btn-sm btn-danger"
@@ -69,7 +67,7 @@
                                                 Cancelar
                                             </button>
 
-                                            <form method="POST" action="{{ route('petitions.delete', $user->id) }}">
+                                            <form method="POST" action="{{ route('adminusers.delete', $user->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>

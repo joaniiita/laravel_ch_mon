@@ -34,14 +34,28 @@
                                 <td>{{$petition->title}}</td>
                                 <td>{{$petition->description}}</td>
                                 <td>{{$petition->signers}}</td>
-                                <td><span class="badge badge-pendiente text-dark">{{$petition->status}}</span></td>
                                 <td>
+                                    @if($petition->status === 'pending')
+                                        <span class="badge badge-pendiente text-dark">{{$petition->status}}</span>
+                                    @elseif($petition->status === 'accepted')
+                                        <span class="badge bg-success text-white">{{$petition->status}}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <form method="POST" action="{{route('adminpetitions.change', $petition->id)}}" class="d-inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-yellow btn-sm text-white me-1 ">
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
+                                    </form>
+
                                     <a href="{{route('adminpetitions.edit', $petition->id)}}" class="btn btn-sm btn-success me-1">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
-                                    <button class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
+                                    <a href="{{route('petitions.show', $petition->id)}}" class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
                                         <i class="bi bi-eye-fill"></i>
-                                    </button>
+                                    </a>
 
                                     <button type="button"
                                             class="btn btn-sm btn-danger"

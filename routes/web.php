@@ -27,11 +27,12 @@ Route::middleware('auth')->controller(AdminPetitionController::class)->group(fun
     Route::delete('admin/petitions/{id}', 'delete')->name('adminpetitions.delete');
     Route::put('admin/petitions/{id}', 'update')->name('adminpetitions.update');
     Route::put('admin/petitions/status/{id}', 'changeStatus')->name('adminpetitions.estado');
+    Route::put('admin/petition/{id}', 'changeStatus')->name('adminpetitions.change');
 });
 
 Route::middleware('auth')->controller(AdminCategoryController::class)->group(function () {
     Route::get('admin/categories/index', 'index')->name('admincategories.index');
-    Route::get('admin/category/{id}', 'show')->name('admincategories.show');
+//    Route::get('admin/category/{id}', 'show')->name('admincategories.show');
     Route::get('admin/categories/add', 'create')->name('admincategories.create');
     Route::get('admin/categories/edit/{id}', 'edit')->name('admincategories.edit');
     Route::post('admin/categories', 'store')->name('admincategories.store');

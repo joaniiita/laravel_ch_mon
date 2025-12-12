@@ -26,16 +26,23 @@ class AdminPetitionController extends Controller
 
     function edit($id){
         $petition = Petition::findOrFail($id);
-        return view('admin.petitions.edit', compact('petition'));
+        $categories = Category::all();
+        return view('admin.petitions.edit', compact('petition', 'categories'));
     }
 
-    function update($id, Request $request){
-//        $request->validate([
-//            'title' => 'required|max:255',
-//            'description' => 'required',
-//            'destinatary' => 'required',
-//            'status' => 'required',
-//            'category' => 'required',
-//        ]);
+    function changeStatus($id){
+        $petition = Petition::findOrFail($id);
+
+        if ($petition->status === 'pending'){
+            $petition->status = 'accepted';
+        } else {
+            $petition->status = 'pending';
+        }
+
+        $petition->save();
+
+        return redirect('/admin/petitions/index');
     }
+
+
 }

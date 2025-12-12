@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -136,7 +137,7 @@
 
                     <div class="d-flex align-items-center">
                         <?php $user = Auth()->user() ?>
-                        <img src="{{ asset('assets/images/' . $user->image) }}"
+                        <img src="{{ asset('assets/images/users/' . $user->image) }}"
                              class="rounded-circle bg-light d-inline-block border border-2 border-secondary me-2"
                              style="width: 35px; height: 35px;">
 

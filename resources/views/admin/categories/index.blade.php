@@ -27,9 +27,9 @@
                                     <a href="{{route('admincategories.edit', $category->id)}}" class="btn btn-sm btn-success me-1">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
-                                    <button class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </button>
+{{--                                    <button class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">--}}
+{{--                                        <i class="bi bi-eye-fill"></i>--}}
+{{--                                    </button>--}}
 
                                     <button type="button"
                                             class="btn btn-sm btn-danger"

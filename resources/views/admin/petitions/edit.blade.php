@@ -2,7 +2,15 @@
 
 @section('content')
     <div class="container-fluid py-4">
-
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        {{$error}}
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -14,7 +22,7 @@
                     </div>
                     <div class="card-body">
 
-                        <form action="{{ route('adminpetitions.update', $petition->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('petitions.update', $petition->id) }}" method="POST" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
 
@@ -38,10 +46,33 @@
 
                             <div class="mb-3">
                                 <label for="description" class="form-label fw-semibold">Descripción</label>
-                                <input type="email" class="form-control" id="description" name="description"
+                                <input type="text" class="form-control" id="description" name="description"
                                        value="{{$petition->description}}" required>
                                 @error('description')
                                     <div class="text-danger mt-1 small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="destinatary" class="form-label fw-semibold">Destinatario</label>
+                                <input type="text" class="form-control" id="destinatary" name="destinatary"
+                                       value="{{$petition->destinatary}}" required>
+                                @error('description')
+                                <div class="text-danger mt-1 small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="category" class="form-label fs-5">Categoría</label>
+                                <select class="form-select" aria-label="Default select example" name="category" id="category">
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('category')
+                                <div class="text-danger small">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -54,16 +85,6 @@
 {{--                                @enderror--}}
 {{--                            </div>--}}
 
-                            <div class="mb-4">
-                                <label for="status" class="form-label fw-semibold">Estado de la Petición</label>
-                                <select class="form-select" id="status" name="status" required>
-                                    <option value="pending" selected>Pendiente de Revisión</option>
-                                    <option value="accepted">Aceptada</option>
-                                </select>
-                                @error('status')
-                                    <div class="text-danger mt-1 small">{{ $message }}</div>
-                                @enderror
-                            </div>
 
                             <hr class="my-4">
 

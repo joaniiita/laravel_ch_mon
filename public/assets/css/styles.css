@@ -28,7 +28,7 @@ body{
 }
 
 .btn-yellow{
-    background-color: var(--button-color);
+    background-color: var(--button-color) !important;
 }
 
 .btn-yellow:hover{

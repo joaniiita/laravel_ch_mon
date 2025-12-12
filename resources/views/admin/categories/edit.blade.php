@@ -2,7 +2,15 @@
 
 @section('content')
     <div class="container-fluid py-4">
-
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        {{$error}}
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="d-flex justify-content-between align-items-center mb-4">

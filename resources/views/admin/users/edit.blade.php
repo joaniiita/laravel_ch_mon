@@ -2,7 +2,15 @@
 
 @section('content')
     <div class="container-fluid py-4">
-
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        {{$error}}
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -29,10 +37,10 @@
 
                             <div class="mb-4">
                                 <label for="image" class="form-label fw-semibold">Imagen Principal (Opcional)</label>
-                                <input class="form-control" type="file" id="image" name="image" accept="image/*">
-                                <div id="imagenHelp" class="form-text">Sube una imagen representativa para tu petición (Max 2MB).</div>
-                                @error('imagen')
-                                <div class="text-danger mt-1 small">{{ $message }}</div>
+                                <input class="form-control" type="file" id="image" name="image">
+                                <div id="imagenHelp" class="form-text">Sube una imagen representativa para tu petición.</div>
+                                @error('image')
+                                    <div class="text-danger mt-1 small">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -46,15 +54,6 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label fw-semibold">Contraseña</label>
-                                <input type="text" class="form-control" id="password" name="password"
-                                       value="{{$user->password}}" required>
-                                @error('password')
-                                    <div class="text-danger mt-1 small">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
                                 <label for="role" class="form-label fw-semibold">Rol</label>
                                 <input type="text" class="form-control" id="role" name="role"
                                        value="{{$user->role}}" required>
@@ -62,9 +61,6 @@
                                     <div class="text-danger mt-1 small">{{ $message }}</div>
                                 @enderror
                             </div>
-
-
-
 
                             <hr class="my-4">
 

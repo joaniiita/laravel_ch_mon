@@ -161,7 +161,8 @@ class PetitionController extends Controller
             'description' => 'required',
             'destinatary' => 'required',
             'category' => 'required',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,svg'
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,svg',
+            'status' => 'nullable'
         ]);
 
         try {
@@ -193,14 +194,18 @@ class PetitionController extends Controller
                     ]);
                 }
 
-
+                if (!$request->has('status')){
+                    $status = $petition->status;
+                } else {
+                    $status = $request->get('status');
+                }
 
                 $petition->update([
                     'title' => $request->title,
                     'description' => $request->description,
                     'destinatary' => $request->destinatary,
                     'category_id' => $request->category,
-                    'status' => 'pending',
+                    'status' => $status,
                 ]);
             }
 
@@ -208,7 +213,11 @@ class PetitionController extends Controller
             return back()->withErrors([$e->getMessage()])->withInput();
         }
 
-        return redirect('/mypetitions');
+        if (Auth::user()->role === 'admin'){
+            return redirect('/admin/petitions/index');
+        } else {
+            return redirect('/mypetitions');
+        }
     }
 
 
