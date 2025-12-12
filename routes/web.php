@@ -42,9 +42,7 @@ Route::middleware('auth')->controller(AdminCategoryController::class)->group(fun
 Route::middleware('auth')->controller(AdminUserController::class)->group(function () {
     Route::get('admin/users/index', 'index')->name('adminusers.index');
     Route::get('admin/user/{id}', 'show')->name('adminusers.show');
-    Route::get('admin/users/add', 'create')->name('adminusers.create');
     Route::get('admin/users/edit/{id}', 'edit')->name('adminusers.edit');
-    Route::post('admin/users', 'store')->name('adminusers.store');
     Route::delete('admin/users/{id}', 'delete')->name('adminusers.delete');
     Route::put('admin/users/{id}', 'update')->name('adminusers.update');
 });

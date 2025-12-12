@@ -140,7 +140,12 @@ class PetitionController extends Controller
         } catch (\Exception $e){
             return back()->withErrors([$e->getMessage()])->withInput();
         }
-        return redirect('/mypetitions');
+
+        if (Auth::user()->role === 'admin'){
+            return redirect('/admin/petitions/index');
+        } else {
+            return redirect('/mypetitions');
+        }
     }
 
     public function edit($id){
@@ -187,6 +192,8 @@ class PetitionController extends Controller
                         'petition_id' => $petition->id
                     ]);
                 }
+
+
 
                 $petition->update([
                     'title' => $request->title,
@@ -271,7 +278,11 @@ class PetitionController extends Controller
             $petition->delete();
 
         }
-        return redirect('/mypetitions');
+        if (Auth::user()->role === 'admin'){
+            return redirect('/admin/petitions/index');
+        } else {
+            return redirect('/mypetitions');
+        }
     }
 
     public function signedPetitions()

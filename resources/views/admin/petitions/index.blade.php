@@ -3,9 +3,9 @@
 @section('content')
     <div class="container-fluid p-4">
 
-        <button class="btn btn-primary mb-3">
+        <a href="{{route('adminpetitions.create')}}" class="btn btn-primary mb-3">
             <i class="bi bi-plus-lg me-1"></i> New
-        </button>
+        </a>
 
         <div class="card shadow-sm">
             <div class="card-body p-0">
@@ -27,25 +27,65 @@
                             <tr>
                                 <td>{{$petition->id}}</td>
                                 <td>
-                                    <img class="rounded-circle bg-secondary bg-opacity-25" src="{{ asset('assets/images/petitions/' . optional($petition->files->first())->file_path) }}" style="width: 35px; height: 35px;">
+                                    <img class="rounded-circle bg-secondary bg-opacity-25"
+                                         src="{{ asset('assets/images/petitions/' . optional($petition->files->first())->file_path) }}"
+                                         style="width: 35px; height: 35px;">
                                 </td>
                                 <td>{{$petition->title}}</td>
                                 <td>{{$petition->description}}</td>
                                 <td>{{$petition->signers}}</td>
                                 <td><span class="badge badge-pendiente text-dark">{{$petition->status}}</span></td>
                                 <td>
-                                    <button class="btn btn-sm btn-success me-1">
+                                    <a href="{{route('adminpetitions.edit', $petition->id)}}" class="btn btn-sm btn-success me-1">
                                         <i class="bi bi-pencil-fill"></i>
-                                    </button>
+                                    </a>
                                     <button class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger">
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal-{{ $petition->id }}">
                                         <i class="bi bi-trash-fill"></i>
                                     </button>
                                 </td>
                             </tr>
 
+                            <div class="modal fade"
+                                 id="deleteModal-{{ $petition->id }}"
+                                 tabindex="-1"
+                                 aria-labelledby="deleteModalLabel-{{ $petition->id }}"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel-{{ $petition->id }}">Confirmar
+                                                eliminación</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Cerrar"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            ¿Estás seguro de que deseas eliminar la petición {{ $petition->title }} ?
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Cancelar
+                                            </button>
+
+                                            <form method="POST" action="{{ route('petitions.delete', $petition->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
 
                         </tbody>
@@ -53,6 +93,7 @@
                 </div>
             </div>
         </div>
+
 
         <nav class="d-flex justify-content-end mt-3">
             <ul class="pagination pagination-sm">
