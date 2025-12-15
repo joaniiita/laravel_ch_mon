@@ -28,6 +28,7 @@
                 Iniciar una petición
             </a>
 
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon border rounded"></span>
             </button>
@@ -79,6 +80,9 @@
                     <li class="nav-item me-3">
                         <a class="btn btn-outline-dark  border-dark fw-bold py-2 px-3" href="{{route('petitions.create')}} ">Iniciar una petición</a>
                     </li>
+
+
+
                     @if(!Auth::check())
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="{{route('login')}}">Entrar</a>
@@ -87,6 +91,11 @@
                             <a class="nav-link text-dark" href="{{route('register')}}">Registrarse</a>
                         </li>
                     @else
+                        @if(Auth::user()->role === 'admin')
+                            <li class="nav-item me-3">
+                                <a class="btn btn-outline-dark  border-dark fw-bold py-2 px-3" href="{{route('admin.home')}}">Dashboard</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

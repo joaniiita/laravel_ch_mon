@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
             except: ['register', 'login']
         );
 
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\Admin::class,
+        ]);
+
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

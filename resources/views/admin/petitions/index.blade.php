@@ -46,7 +46,11 @@
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-yellow btn-sm text-white me-1 ">
-                                            <i class="bi bi-check-lg"></i>
+                                            @if($petition->status === 'pending')
+                                                <i class="bi bi-check-lg"></i>
+                                            @elseif($petition->status === 'accepted')
+                                                <i class="bi bi-x-lg"></i>
+                                            @endif
                                         </button>
                                     </form>
 

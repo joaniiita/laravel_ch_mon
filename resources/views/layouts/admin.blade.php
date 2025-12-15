@@ -37,9 +37,9 @@
 <div class="d-flex">
 
     <div class="sidebar d-flex flex-column p-0">
-        <div class="p-3 text-center fs-4 fw-bold text-white" style="background-color: #E83333;">
+        <a href="{{route('home')}}" class="p-3 text-center fs-4 fw-bold text-white text-decoration-none" style="background-color: #E83333;">
             change.org
-        </div>
+        </a>
 
         <div class="p-4 border-bottom border-white border-opacity-25 text-center">
             <div
@@ -135,14 +135,43 @@
                         </span>
                     </button>
 
-                    <div class="d-flex align-items-center">
-                        <?php $user = Auth()->user() ?>
-                        <img src="{{ asset('assets/images/users/' . $user->image) }}"
-                             class="rounded-circle bg-light d-inline-block border border-2 border-secondary me-2"
-                             style="width: 35px; height: 35px;">
+                    <div class="dropdow">
+                        <button class="btn p-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php $user = Auth()->user() ?>
 
-                        <i class="bi bi-chevron-down text-secondary small"></i>
-                        </img>
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('assets/images/users/' . $user->image) }}"
+                                     class="rounded-circle bg-light d-inline-block border border-2 border-secondary me-2"
+                                     style="width: 35px; height: 35px;"
+                                     alt="Foto de perfil">
+                            </div>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                            <li>
+                                <h6 class="dropdown-header">
+                                    ¡Hola, {{ $user->name }}!
+                                </h6>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <a class="dropdown-item" href="{{ route('adminusers.show', $user->id) }}">
+                                    <i class="bi bi-person-circle me-2"></i> Mi Perfil
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

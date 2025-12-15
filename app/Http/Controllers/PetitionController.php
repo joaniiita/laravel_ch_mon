@@ -35,6 +35,7 @@ class PetitionController extends Controller
 
     public function create(Request $request)
     {
+        $this->authorize('create', Petition::class);
         $categories = Category::all();
         return view('petitions.create', compact('categories'));
     }
@@ -150,6 +151,7 @@ class PetitionController extends Controller
 
     public function edit($id){
         $petition = Petition::findOrFail($id);
+        $this->authorize('update', $petition);
         $categories = Category::all();
         return view('petitions.edit', compact('petition', 'categories'));
     }
@@ -167,6 +169,7 @@ class PetitionController extends Controller
 
         try {
             $petition = Petition::findOrFail($id);
+            $this->authorize('update', $petition);
             if (Auth::id() === $petition->user_id) {
                 $oldFile = File::where('petition_id', $petition->id)->first();
 
@@ -271,6 +274,7 @@ class PetitionController extends Controller
     public function delete($id){
         if (Auth::check()) {
             $petition = Petition::findOrFail($id);
+            $this->authorize('delete', $petition);
             $petition_img = File::where('petition_id', $petition->id)->first();
 
             if ($petition_img) {

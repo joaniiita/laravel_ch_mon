@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminCategoryController;
-use App\Http\Controllers\AdminPetitionController;
-use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminPetitionController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,7 +16,7 @@ Route::get('/', function () {
 //    return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->controller(AdminPetitionController::class)->group(function () {
+Route::middleware('admin')->controller(AdminPetitionController::class)->group(function () {
     Route::get('admin', 'home')->name('admin.home');
     Route::get('admin/petitions/index', 'home')->name('adminpetitions.index');
     Route::get('admin/petition/{id}', 'show')->name('adminpetitions.show');
@@ -30,7 +29,7 @@ Route::middleware('auth')->controller(AdminPetitionController::class)->group(fun
     Route::put('admin/petition/{id}', 'changeStatus')->name('adminpetitions.change');
 });
 
-Route::middleware('auth')->controller(AdminCategoryController::class)->group(function () {
+Route::middleware('admin')->controller(AdminCategoryController::class)->group(function () {
     Route::get('admin/categories/index', 'index')->name('admincategories.index');
 //    Route::get('admin/category/{id}', 'show')->name('admincategories.show');
     Route::get('admin/categories/add', 'create')->name('admincategories.create');
@@ -40,7 +39,7 @@ Route::middleware('auth')->controller(AdminCategoryController::class)->group(fun
     Route::put('admin/categories/{id}', 'update')->name('admincategories.update');
 });
 
-Route::middleware('auth')->controller(AdminUserController::class)->group(function () {
+Route::middleware('admin')->controller(AdminUserController::class)->group(function () {
     Route::get('admin/users/index', 'index')->name('adminusers.index');
     Route::get('admin/user/{id}', 'show')->name('adminusers.show');
     Route::get('admin/users/edit/{id}', 'edit')->name('adminusers.edit');

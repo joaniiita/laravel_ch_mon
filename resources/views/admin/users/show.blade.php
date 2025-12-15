@@ -1,4 +1,4 @@
-@extends('layouts.admin') {{-- Asegúrate de que este sea el layout correcto --}}
+@extends('layouts.admin')
 
 @section('content')
     <div class="container-fluid py-4 ">
