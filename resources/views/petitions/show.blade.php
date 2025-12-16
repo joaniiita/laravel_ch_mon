@@ -101,7 +101,7 @@
 
 
                 <div class="col-12 col-lg-4">
-                    @if($petition->user_id === Auth::id())
+                    @if(Auth::check() && $petition->user_id === Auth::id())
                         <div class="row mb-3 gap-2 d-flex justify-content-around">
 
                             <a href="{{ route('petitions.edit', $petition->id) }}" class="btn btn-warning col-5">
@@ -113,6 +113,7 @@
                             </button>
 
                         </div>
+
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">

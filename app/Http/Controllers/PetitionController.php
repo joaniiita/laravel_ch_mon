@@ -13,7 +13,7 @@ class PetitionController extends Controller
 {
     public function index()
     {
-        $petitions = Petition::all();
+        $petitions = Petition::orderBy('created_at', 'desc')->get();
 
         return view('petitions.index', compact('petitions'));
     }
@@ -274,6 +274,7 @@ class PetitionController extends Controller
     public function delete($id){
         if (Auth::check()) {
             $petition = Petition::findOrFail($id);
+
             $this->authorize('delete', $petition);
             $petition_img = File::where('petition_id', $petition->id)->first();
 

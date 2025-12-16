@@ -53,6 +53,17 @@
                                 @enderror
                             </div>
 
+                            @if(Auth::user()->id === $user->id)
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-semibold">Contraseña</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                           value="{{$user->password}}" required>
+                                    @error('password')
+                                    <div class="text-danger mt-1 small">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            @endif
+
                             <div class="mb-3">
                                 <label for="role" class="form-label fw-semibold">Rol</label>
                                 <input type="text" class="form-control" id="role" name="role"
