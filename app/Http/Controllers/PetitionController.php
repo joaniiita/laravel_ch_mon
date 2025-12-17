@@ -89,7 +89,7 @@ class PetitionController extends Controller
 
                 $petition->signers()->attach($user->id);
 
-                $petition->signers = $petition->signers + 1;
+                $petition->signers = $petition->signers()->count();
                 $petition->save();
             } else {
                 return back()->withErrors(['Email incorrecto'])->withInput();

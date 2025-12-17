@@ -56,38 +56,30 @@ class AdminUserController extends Controller
         return view('admin.users.show', compact('user'));
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $user = User::findOrFail($id);
-        $petitions = Petition::where('user_id', $user->id)->get();
-        $signatures = $user->signPetition()->get();
 
-        $image = $user->image;
-        $imagePath = public_path('assets/images/users/' . $image);
-
-        if ($image !== 'defaultProfile.png' && file_exists($imagePath)) {
-            if(!unlink($imagePath)){
-                return back()->withErrors("No se ha podido eliminar la imagen")->withInput();
+        if ($user->image !== 'defaultProfile.png') {
+            $path = public_path('assets/images/users/' . $user->image);
+            if (file_exists($path)) {
+                unlink($path);
             }
         }
 
-        foreach ($signatures as $signature) {
-           $petition = Petition::where('id', $signature->petition_id)->first();
-            if ($petition) {
-                $petition->signers = $petition->signers - 1;
-                $petition->save();
-            }
+        foreach ($user->signPetition as $petition) {
+            $petition->signers()->detach($user->id);
+            $petition->signers = $petition->signers()->count();
+            $petition->save();
         }
 
-        foreach ($petitions as $petition) {
-            if ($petition->user_id === $user->id){
-                $petition->files()->delete();
-                $petition->delete();
-            }
+        foreach ($user->petitions as $petition) {
+            $petition->files()->delete();
+            $petition->delete();
         }
-
-
 
         $user->delete();
+
         return redirect('/admin/users/index');
     }
 
