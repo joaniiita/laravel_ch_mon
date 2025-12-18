@@ -57,7 +57,7 @@
                                     <a href="{{route('adminpetitions.edit', $petition->id)}}" class="btn btn-sm btn-success me-1">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
-                                    <a href="{{route('petitions.show', $petition->id)}}" class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
+                                    <a href="{{route('adminpetitions.show', $petition->id)}}" class="btn btn-sm text-white me-1" style="background-color: #7c5fd0;">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
 

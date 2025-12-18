@@ -30,6 +30,11 @@ class AdminPetitionController extends Controller
         return view('admin.petitions.edit', compact('petition', 'categories'));
     }
 
+    function show($id){
+        $petition = Petition::findOrFail($id);
+        return view('admin.petitions.show', compact('petition'));
+    }
+
     function changeStatus($id){
         $petition = Petition::findOrFail($id);
 
